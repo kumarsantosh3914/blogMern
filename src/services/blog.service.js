@@ -15,6 +15,15 @@ const createBlog = async (blogData) => {
   }
 };
 
+const deleteBlog = async (id) => {
+  try {
+    const blog = await Blog.findOneAndDelete(id);
+    return blog;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 /**
  * Updates an existing blog with the provided data.
  * @param {Object} blogData - The data to update the blog.
@@ -43,9 +52,9 @@ const updateBlog = async (blogData, blogId) => {
  * @returns {Promise<Array>} An array of blog objects that match the criteria.
  * @throws {Error} If there is an error retrieving blogs.
  */
-const getBlogs = async (criteria) => {
+const getBlogs = async (id) => {
   try {
-    const blogs = await Blog.find(criteria);
+    const blogs = await Blog.find(id);
     return blogs;
   } catch (error) {
     throw new Error("Failed to get blogs: " + error.message);
@@ -88,6 +97,7 @@ const getBlogById = async (id, userId) => {
 
 module.exports = {
   createBlog,
+  deleteBlog,
   updateBlog,
   getBlogs,
   getAllBlogs,
